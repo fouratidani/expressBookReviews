@@ -1,43 +1,47 @@
-const express = require('express');
-let books = require("./booksdb.js");
-let isValid = require("./auth_users.js").isValid;
-let users = require("./auth_users.js").users;
-const public_users = express.Router();
+const axios = require('axios');
 
+// Task 10: Get the list of books
+const getBooks = async () => {
+  try {
+    const response = await axios.get('http://localhost:5000/customer');
+    console.log('Books:', response.data);
+  } catch (error) {
+    console.error('Error fetching books:', error);
+  }
+};
 
-public_users.post("/register", (req,res) => {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
-});
+// Task 11: Get book details based on ISBN
+const getBookByISBN = async (isbn) => {
+  try {
+    const response = await axios.get(`http://localhost:5000/customer/isbn/${isbn}`);
+    console.log('Book details:', response.data);
+  } catch (error) {
+    console.error(`Error fetching book with ISBN ${isbn}:`, error);
+  }
+};
 
-// Get the book list available in the shop
-public_users.get('/',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
-});
+// Task 12: Get books by Author
+const getBooksByAuthor = async (author) => {
+  try {
+    const response = await axios.get(`http://localhost:5000/customer/author/${author}`);
+    console.log('Books by Author:', response.data);
+  } catch (error) {
+    console.error(`Error fetching books by author ${author}:`, error);
+  }
+};
 
-// Get book details based on ISBN
-public_users.get('/isbn/:isbn',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
- });
-  
-// Get book details based on author
-public_users.get('/author/:author',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
-});
+// Task 13: Get books by Title
+const getBooksByTitle = async (title) => {
+  try {
+    const response = await axios.get(`http://localhost:5000/customer/title/${title}`);
+    console.log('Books by Title:', response.data);
+  } catch (error) {
+    console.error(`Error fetching books with title ${title}:`, error);
+  }
+};
 
-// Get all books based on title
-public_users.get('/title/:title',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
-});
-
-//  Get book review
-public_users.get('/review/:isbn',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
-});
-
-module.exports.general = public_users;
+// Execute tasks
+getBooks();
+getBookByISBN('9780141439518');
+getBooksByAuthor('Chinua Achebe');
+getBooksByTitle('Things Fall Apart');
